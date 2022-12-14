@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import {
   debounceTime,
   delay,
   filter,
+  from,
   interval,
   map,
   Observable,
@@ -18,9 +20,28 @@ import {
   styleUrls: ['./sample.component.scss'],
 })
 export class SampleComponent {
+  form1: FormControl = new FormControl('hello', {
+    nonNullable: true,
+    validators: [Validators.required],
+  });
+
   count$!: Observable<number>;
 
   constructor() {}
+
+  onValidationCheck() {
+    if (this.form1.invalid) {
+      console.error('エラーが発生しました');
+    }
+  }
+
+  onClear() {
+    this.form1.reset();
+  }
+
+  onDisable() {
+    this.form1.reset();
+  }
 
   onClick(): void {
     this.observal1$().subscribe((num) => console.log(num));
